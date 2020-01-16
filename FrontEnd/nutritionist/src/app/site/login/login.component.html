@@ -1,0 +1,70 @@
+<div class="row justify-content-center mt-3">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Login</h3>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                    <div class="alert alert-danger" *ngIf="loginFailed">
+                        Invalid Username /Password
+
+                    </div>
+
+                    <div class="alert alert-warning" *ngIf="unauthorized">
+                        User is unapproved
+
+                    </div>
+
+                    <div class="alert alert-danger" *ngIf="error">
+                        Server error
+
+                    </div>
+
+                    <div class="form-group">
+                        <!-- <label for="Username">User Id / UserName</label> -->
+                        <input class="form-control" type="text" placeholder="Enter Username" name="uname"
+                            formControlName="username">
+                        <span class="validation-error" *ngIf="username.touched && username.hasError('required')">
+                            *User Id/ Username required</span>
+                        <div class="validation-error" *ngIf="username.touched && username.hasError('maxlength')">
+                            **UserId/ Username cannot exceed 20 charteres
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="password"> Password</label> -->
+                        <div class="input-group">
+                            <input class="form-control" [type]="showPass ? 'text' : 'password'"
+                                placeholder="Enter password" name="pwd" formControlName="password">
+                            <div class="input-group-append" style="cursor: pointer;" (click)="showPassword()">
+                                <span class="input-group-text" id="basic-addon2">
+                                    <i class="material-icons" *ngIf="!showPass" title="Show Password">
+                                        visibility
+                                    </i>
+                                    <i class="material-icons" *ngIf="showPass" title="Hide Password">
+                                        visibility_off
+                                    </i>
+
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="validation-error" *ngIf="password.touched && !password.valid"> *Password
+                            Required</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="submit" value="Login" class="btn btn-primary login_btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    Don't have an account?<a [routerLink]="['/sign-up']">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

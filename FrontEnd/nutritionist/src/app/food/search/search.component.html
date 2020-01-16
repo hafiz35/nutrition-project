@@ -1,0 +1,13 @@
+<div class="jumbotron">
+    <label class="display-4 text-white" for="searchfood">Find Food</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="material-icons">
+                    emoji_food_beverage
+                </i>
+            </span>
+        </div>
+        <input type="text" class="form-control" name="search-bar" id="searchfood" placeholder="Search Food" (input)="onSearchText($event)">
+    </div>
+</div>

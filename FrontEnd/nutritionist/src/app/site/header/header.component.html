@@ -1,0 +1,45 @@
+<div class="container-fluid bg-primary">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <nav class="navbar navbar-dark bg-primary text-white navbar-expand-sm">
+                        <a (click)="home()" class="navbar-brand">
+                            Nutritionist
+                        </a>
+                        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcontent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navcontent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item" *ngIf="!loggedInUser">
+                                    <a [routerLink]="['/login']" routerLinkActive="active" class="nav-link">Login</a>
+                                </li>
+                                <li class="nav-item" *ngIf="!loggedInUser">
+                                    <a [routerLink]="['/sign-up']" routerLinkActive="active" class="nav-link">Sign
+                                        Up</a>
+                                </li>
+                                <li class="nav-item dropdown" *ngIf="loggedInUser">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{loggedInUser.username}}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" [routerLink]="['/account']"
+                                            routerLinkActive="active">Personal Details</a>
+                                        <a class="dropdown-item" [routerLink]="['/edit/password']"
+                                            routerLinkActive="active">Change
+                                            Password</a>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" (click)="logout()">Logout</button>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>

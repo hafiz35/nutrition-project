@@ -1,0 +1,8 @@
+<app-search></app-search>
+<ul class="list-group">
+<li class="list-group-item" (click)="viewDetails(food.name)" *ngFor="let food of foods">
+    <span class="col-12 col-md-6 text-bold">{{food?.name}}</span>
+    <span class="col-12 col-md-6">{{food?.group}}</span>
+    <button class="btn btn-primary">Add To Favorite</button>
+</li>
+</ul>
