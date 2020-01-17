@@ -33,14 +33,18 @@ public class User {
 	@Column(name="us_number")
 	private String mobileNumber;
 	
+	public Set<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Item> items) {
+		this.items = items;
+	}
+
 	@Column(name="us_confirmed")
 	private boolean confirmed;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="favorite_user",
-	joinColumns=@JoinColumn(name="fu_us_username"),
-	inverseJoinColumns=@JoinColumn(name="fu_it_id")
-	)
+	@ManyToMany(mappedBy="userList")
 	private Set<Item> items;
 
 	public User() {

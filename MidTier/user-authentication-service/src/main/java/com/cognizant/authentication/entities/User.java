@@ -1,42 +1,49 @@
 package com.cognizant.authentication.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
 public class User {
-
-	@Id
-	@Column(name = "us_username")
+	
+	@Id	
+	@Column(name="us_username")
 	private String username;
-
-	@Column(name = "us_password")
+	
+	@Column(name="us_password")
 	private String password;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "us_ro_id")
+	@JoinColumn(name="us_ro_id")
 	private Role role;
-
-	@Column(name = "us_email", unique = true)
+	
+	@Column(name="us_email", unique=true)
 	private String email;
-
-	@Column(name = "us_number")
+	
+	@Column(name="us_number")
 	private String mobileNumber;
+	
 
-	@Column(name = "us_confirmed")
+	@Column(name="us_confirmed")
 	private boolean confirmed;
-
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String username, String password, Role role, String email, String mobileNumber, boolean confirmed) {
+	public User(String username, String password, Role role, String email, String mobileNumber,
+			boolean confirmed) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -93,5 +100,5 @@ public class User {
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
 	}
-
+	
 }

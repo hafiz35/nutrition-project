@@ -1,6 +1,7 @@
 package com.cognizant.favoritesservice.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,14 @@ public class FavoriteService {
 	public List<Item> getAllFavorites(){
 		return favoriteRepository.findAll();
 	}
-	public List<Item> getFavoritesByUsername(String username){
+	public Set<Item> getFavoritesByUsername(String username){
 		User user=userRepository.findById(username).get();
-		return favoriteRepository.findByUser(user);
+		return user.getItems();
 	}
-	public Item addFavorite(Item item) {
-		return favoriteRepository.save(item);
+	public Item addFavorite(String username,Item item) {
+		favoriteRepository.save(item);
+	
+		return item;
 	}
 	public void removeFavorite(Item item) {
 		favoriteRepository.delete(item);

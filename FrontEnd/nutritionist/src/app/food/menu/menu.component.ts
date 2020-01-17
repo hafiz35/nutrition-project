@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from 'src/app/services/food.service';
 import { Router } from '@angular/router';
 import { Food } from 'src/app/models/food.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,31 +11,45 @@ import { Food } from 'src/app/models/food.model';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
+  loggedInUser:User;
   tempfoods: Food[];
   foods: Food[];
-  constructor(private foodService: FoodService,private router:Router) {
+  query:string="";
+  constructor(private foodService: FoodService,private router:Router,private authenticationService:AuthService) {
+    this.loggedInUser=this.authenticationService.loggedInUser.value;
   }
 
   ngOnInit() {
-    this.foodService.getfoods().subscribe(data => {
+    this.foodService.getfoods(this.query).subscribe(data => {
       this.foods = data['list']['item'];
-      this.tempfoods=data['list']['item'];
     });
     this.foodService.filter.subscribe((obj: { title: string }) => {
-      if (obj.title !== '') {
-        const result = this.tempfoods.filter(filterfood => filterfood.name.toLowerCase().includes(obj.title.toLowerCase()));
-        this.foods = result ? result : [];
-      } else {
-        this.foods = [...this.tempfoods];
+        this.query=obj.title;
+        if(this.query){
+        this.foodService.getfoods(this.query).subscribe(data => {
+          this.foods = data['list']['item'];
+        });
       }
-    });
+      });
   }
 
   viewDetails(name:string){
-    this.foodService.getfood(name).subscribe((food:Food)=>{
+    this.foodService.getfood(name,this.query).subscribe((food:Food)=>{
       this.foodService.foodToView=food;
     })
   }
 
+  onAddToFavoriteClicked(food){
+    const item:Food={
+      offset:food.offset,
+      group:food.group,
+      name:food.name,
+      ndbno:food.ndbno,
+      ds:food.ds,
+      manu:food.manu,
+      user:[this.loggedInUser],
+    }
+    console.log(item);
+    this.foodService.addFavorite(item).subscribe();
+  }
 }

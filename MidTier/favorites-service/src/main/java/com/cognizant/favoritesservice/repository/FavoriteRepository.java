@@ -10,5 +10,6 @@ import com.cognizant.favoritesservice.entities.User;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<Item, Integer> {
-	List<Item> findByUser(User user);
+	//List<Item> findByUser(User user);
+	
 }

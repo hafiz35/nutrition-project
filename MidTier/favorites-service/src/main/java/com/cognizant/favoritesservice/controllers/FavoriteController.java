@@ -1,6 +1,7 @@
 package com.cognizant.favoritesservice.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,12 +22,12 @@ public class FavoriteController {
 	FavoriteService favoriteService;
 	
 	@GetMapping("/{username}")
-	public List<Item> getFavoritesByUsername(@PathVariable("username") String username){
+	public Set<Item> getFavoritesByUsername(@PathVariable("username") String username){
 		return favoriteService.getFavoritesByUsername(username);
 	}
-	@PostMapping
-	public Item addFavorite(@RequestBody Item item) {
-		return favoriteService.addFavorite(item);
+	@PostMapping("/{username}")
+	public Item addFavorite(@PathVariable("username") String username,@RequestBody Item item) {
+		return favoriteService.addFavorite(username,item);
 	}
 	@GetMapping
 	public List<Item> getAllFavorites(){
