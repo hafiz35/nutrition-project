@@ -1,6 +1,7 @@
 package com.cognizant.favoritesservice.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cognizant.favoritesservice.entities.Item;
 import com.cognizant.favoritesservice.entities.User;
+import com.cognizant.favoritesservice.exception.UserNotFoundException;
 import com.cognizant.favoritesservice.repository.FavoriteRepository;
 import com.cognizant.favoritesservice.repository.UserRepository;
 
@@ -27,10 +29,16 @@ public class FavoriteService {
 		User user=userRepository.findById(username).get();
 		return user.getItems();
 	}
-	public Item addFavorite(String username,Item item) {
-		favoriteRepository.save(item);
-	
-		return item;
+	public Item addFavorite(String username,Item item) throws UserNotFoundException {
+		Optional<User> user = userRepository.findByUsername(username);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException("User with username " + username + " does not exists");
+		} else {			
+			Item new_item=new Item(item.getOffset(), item.getGroup(), item.getName(),item.getNdbno(), item.getDs(), item.getManu(),
+					new User(user.get().getUsername(), user.get().getPassword(), user.get().getRole(), user.get().getEmail(), user.get().getMobileNumber(), user.get().isConfirmed()));
+			favoriteRepository.save(new_item);
+			return item;
+		}
 	}
 	public void removeFavorite(Item item) {
 		favoriteRepository.delete(item);

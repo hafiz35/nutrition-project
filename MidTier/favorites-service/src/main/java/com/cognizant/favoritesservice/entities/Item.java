@@ -1,6 +1,8 @@
 package com.cognizant.favoritesservice.entities;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="item")
@@ -27,11 +32,18 @@ public class Item {
 	@Column(name="it_manu")
 	private String manu;
 	@ManyToMany
-	@JoinTable(name = "favorite_user", joinColumns = @JoinColumn(name = "fu_it_id"), inverseJoinColumns = @JoinColumn(name = "fu_us_username"))
+	@JoinTable(name = "favorite_user", joinColumns = @JoinColumn(name = "fu_it_id",referencedColumnName="it_id"), inverseJoinColumns = @JoinColumn(name = "fu_us_username",referencedColumnName="us_username"))
+	@JsonIgnore
 	private Set<User> userList;
 
 	
 	
+	public Set<User> getUserList() {
+		return userList;
+	}
+	public void setUserList(Set<User> userList) {
+		this.userList = userList;
+	}
 	public Integer getOffset() {
 		return offset;
 	}
@@ -68,7 +80,7 @@ public class Item {
 	public void setManu(String manu) {
 		this.manu = manu;
 	}
-	public Item(Integer offset, String group, String name, Integer ndbno, String ds, String manu) {
+	public Item(Integer offset, String group, String name, Integer ndbno, String ds, String manu,User ...users ) {
 		super();
 		this.offset = offset;
 		this.group = group;
@@ -76,6 +88,9 @@ public class Item {
 		this.ndbno = ndbno;
 		this.ds = ds;
 		this.manu = manu;
+		this.userList=Stream.of(users).collect(Collectors.toSet());
+		this.userList.forEach(x->x.getItems().add(this));
+
 	}
 	public Item() {
 		super();

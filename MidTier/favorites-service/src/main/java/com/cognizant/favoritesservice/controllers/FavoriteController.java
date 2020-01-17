@@ -1,4 +1,4 @@
-package com.cognizant.favoritesservice.controllers;
+ package com.cognizant.favoritesservice.controllers;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.favoritesservice.entities.Item;
+import com.cognizant.favoritesservice.exception.UserNotFoundException;
 import com.cognizant.favoritesservice.services.FavoriteService;
 
 @RestController
@@ -26,8 +27,14 @@ public class FavoriteController {
 		return favoriteService.getFavoritesByUsername(username);
 	}
 	@PostMapping("/{username}")
-	public Item addFavorite(@PathVariable("username") String username,@RequestBody Item item) {
-		return favoriteService.addFavorite(username,item);
+	public Item addFavorite(@PathVariable("username") String username,@RequestBody Item item) throws UserNotFoundException {
+		try {
+			return favoriteService.addFavorite(username,item);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return item;
 	}
 	@GetMapping
 	public List<Item> getAllFavorites(){

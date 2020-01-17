@@ -1,13 +1,12 @@
 package com.cognizant.favoritesservice.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -45,7 +44,7 @@ public class User {
 	private boolean confirmed;
 	
 	@ManyToMany(mappedBy="userList")
-	private Set<Item> items;
+	private Set<Item> items=new HashSet<>();
 
 	public User() {
 		super();
