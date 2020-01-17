@@ -36,6 +36,7 @@ export class MenuComponent implements OnInit {
   viewDetails(name:string){
     this.foodService.getfood(name,this.query).subscribe((food:Food)=>{
       this.foodService.foodToView=food;
+      this.router.navigate(['/display-nutrients']);
     })
   }
 
@@ -50,6 +51,6 @@ export class MenuComponent implements OnInit {
       user:[this.loggedInUser],
     }
     console.log(item);
-    this.foodService.addFavorite(item).subscribe();
+    this.foodService.addFavorite(item,this.loggedInUser.username).subscribe();
   }
 }

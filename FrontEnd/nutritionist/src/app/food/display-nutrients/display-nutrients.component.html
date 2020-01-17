@@ -1,0 +1,19 @@
+<div class="text-bold font-size-20 mt-4">{{foodSelected.name}}
+<button class="btn btn-primary float-right" (click)="onAddToFavoriteClicked()">Add To Favorite</button>
+</div>
+<table class="table mt-4">
+    <thead>
+        <th>Nutrient</th>
+        <th>Derivation</th>
+        <th>Group</th>
+        <th>Value</th>
+        <th>Unit</th>
+    </thead>
+    <tbody *ngFor="let nutrient of nutrients">
+        <td>{{nutrient.name}}</td>
+        <td>{{nutrient.derivation}}</td>
+        <td>{{nutrient.group}}</td>
+        <td>{{nutrient.value}}</td>
+        <td>{{nutrient.unit}}</td>
+    </tbody>
+</table>

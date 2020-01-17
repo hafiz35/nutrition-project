@@ -5,10 +5,7 @@ export function dashboardUrl(user: User) {
     const redirectUrl = [];
     switch (user.role) {
         case RoleName.ROLE_USER:
-            redirectUrl.push('user-dashboard');
-            break;
-        case RoleName.ROLE_ADMIN:
-            redirectUrl.push('admin-dashboard');
+            redirectUrl.push('menu');
             break;
         default:
             return;

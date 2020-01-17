@@ -3,10 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-
                     <nav class="navbar navbar-dark bg-primary text-white navbar-expand-sm">
-                        <a (click)="home()" class="navbar-brand">
-                            Nutritionist
+                        <a class="navbar-brand"><i class="material-icons vertical-align-middle">
+                            local_dining
+                          </i>Nutritionist
                         </a>
                         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcontent">
                             <span class="navbar-toggler-icon"></span>
@@ -20,20 +20,16 @@
                                     <a [routerLink]="['/sign-up']" routerLinkActive="active" class="nav-link">Sign
                                         Up</a>
                                 </li>
-                                <li class="nav-item dropdown" *ngIf="loggedInUser">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{loggedInUser.username}}
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" [routerLink]="['/account']"
-                                            routerLinkActive="active">Personal Details</a>
-                                        <a class="dropdown-item" [routerLink]="['/edit/password']"
-                                            routerLinkActive="active">Change
-                                            Password</a>
-                                        <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item" (click)="logout()">Logout</button>
-                                    </div>
+                                <li class="nav-item" *ngIf="loggedInUser">
+                                    <a [routerLink]="['/menu']" routerLinkActive="active" class="nav-link"><i class="material-icons vertical-align-middle">
+                                        perm_identity
+                                        </i>{{loggedInUser.username}}</a>
+                                </li>
+                                <li class="nav-item" *ngIf="loggedInUser">
+                                    <a [routerLink]="['/favorites']" routerLinkActive="active" class="nav-link">Favorites</a>
+                                </li>
+                                <li class="nav-item" *ngIf="loggedInUser">
+                                    <a [routerLink]="['/login']" routerLinkActive="active" (click)="logout()" class="nav-link">Log Out</a>
                                 </li>
                             </ul>
 

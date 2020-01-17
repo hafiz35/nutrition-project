@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './food/search/search.component';
 import { MenuComponent } from './food/menu/menu.component';
+import { DisplayNutrientsComponent } from './food/display-nutrients/display-nutrients.component';
+import { FavoritesComponent } from './food/favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MenuComponent } from './food/menu/menu.component';
     HeaderComponent,
     SignUpComponent,
     SearchComponent,
-    MenuComponent
+    MenuComponent,
+    DisplayNutrientsComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

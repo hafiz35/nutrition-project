@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, Observer } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Food } from '../models/food.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FoodService {
-  baseUrl:string="http://localhost:9080/favorite-service"
+  baseUrl:string="http://localhost:9080/favorites-service/favorites"
   filter = new Subject();
   foods:Food[];
+  token:string;
   foodToView:Food;
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient,private authService:AuthService) { }
   
   getfoods(query:string):Observable<any>{
     return this.httpClient.get(`https://api.nal.usda.gov/ndb/search/?format=json&q=${query}&offset=0&api_key=jjPhNaKUJhs5hzT25Eh0FhYlktzwUYdk9DhoH8hb`);
@@ -26,7 +28,24 @@ export class FoodService {
       });
     });
   }
-  addFavorite(food:Food):Observable<any>{
-    return this.httpClient.post(`${this.baseUrl}`,food);
+  addFavorite(food:Food,username:string):Observable<any>{
+    this.token=this.authService.getToken();
+    console.log(this.token);
+    let headers=new HttpHeaders();
+    headers=headers.set('Authorization','Bearer '+this.token);
+    return this.httpClient.post(`${this.baseUrl}/${username}`,food,{headers});
   }
+  getFavoritesBasedOnUsername(username:string){
+    this.token=this.authService.getToken();
+    console.log(this.token);
+    let headers=new HttpHeaders();
+    headers=headers.set('Authorization','Bearer '+this.token);
+    return this.httpClient.get<Food[]>(`${this.baseUrl}/${username}`,{headers});
+  }
+
+  getnutrients(ndbno:number):Observable<any>{
+    return this.httpClient.get(`https://api.nal.usda.gov/ndb/V2/reports?ndbno=${ndbno}&type=b&format=json&api_key=jjPhNaKUJhs5hzT25Eh0FhYlktzwUYdk9DhoH8hb`);
+  }
+
+ 
 }
