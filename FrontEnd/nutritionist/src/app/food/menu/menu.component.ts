@@ -12,9 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MenuComponent implements OnInit {
   loggedInUser:User;
-  tempfoods: Food[];
-  foods: Food[];
+  foods: Food[]=[];
   query:string="";
+  addedToFavorite:boolean=false;
+  favoriteAlreadyExist:boolean=false;
   constructor(private foodService: FoodService,private router:Router,private authenticationService:AuthService) {
     this.loggedInUser=this.authenticationService.loggedInUser.value;
   }
@@ -30,17 +31,18 @@ export class MenuComponent implements OnInit {
           this.foods = data['list']['item'];
         });
       }
-      });
+    });
   }
 
   viewDetails(name:string){
     this.foodService.getfood(name,this.query).subscribe((food:Food)=>{
       this.foodService.foodToView=food;
       this.router.navigate(['/display-nutrients']);
+      this.foodService.addToFavorite=true;
     })
   }
 
-  onAddToFavoriteClicked(food){
+  onAddToFavoriteClicked(food:any){
     const item:Food={
       offset:food.offset,
       group:food.group,
@@ -50,7 +52,20 @@ export class MenuComponent implements OnInit {
       manu:food.manu,
       user:[this.loggedInUser],
     }
-    console.log(item);
-    this.foodService.addFavorite(item,this.loggedInUser.username).subscribe();
+    this.foodService.getFavoriteExistBasedOnUsername(this.loggedInUser.username,item).subscribe(data=>{
+      this.favoriteAlreadyExist=data;
+      if(this.favoriteAlreadyExist){
+        setTimeout(()=>{
+          this.favoriteAlreadyExist=false;
+        },1000);
+      }
+      else{
+        this.addedToFavorite=true;
+        setTimeout(() => {
+          this.addedToFavorite = false;
+        }, 1000);
+      }
+    });
+      this.foodService.addFavorite(item,this.loggedInUser.username).subscribe();
   }
 }

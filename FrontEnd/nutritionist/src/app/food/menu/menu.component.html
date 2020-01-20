@@ -1,4 +1,6 @@
 <app-search></app-search>
+<div class="alert alert-success" *ngIf="favoriteAlreadyExist">Favorite Already Exist</div>
+<div class="alert alert-success" *ngIf="addedToFavorite">Successfully Added To Favorite</div>
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let food of foods">
         <div class="row">

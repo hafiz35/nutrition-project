@@ -35,12 +35,6 @@ describe('SignUpComponent', () => {
     expect(component.signupForm.valid).toBeFalsy();
   });
 
- xit('username validity', () => {
-    let username = component.signupForm.controls['username'];
-    username.setValue('abc');
-    expect(username.valid).toBeTruthy();
-  });
-
 
   it('username validity when empty', () => {
     let username = component.signupForm.controls['username'];

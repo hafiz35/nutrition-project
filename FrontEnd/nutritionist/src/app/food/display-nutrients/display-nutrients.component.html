@@ -1,5 +1,5 @@
 <div class="text-bold font-size-20 mt-4">{{foodSelected.name}}
-<button class="btn btn-primary float-right" (click)="onAddToFavoriteClicked()">Add To Favorite</button>
+<button class="btn btn-primary float-right" *ngIf="addToFavorite" (click)="onAddToFavoriteClicked()">Add To Favorite</button>
 </div>
 <table class="table mt-4">
     <thead>

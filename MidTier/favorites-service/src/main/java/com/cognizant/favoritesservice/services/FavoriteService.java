@@ -29,6 +29,13 @@ public class FavoriteService {
 		User user=userRepository.findById(username).get();
 		return user.getItems();
 	}
+	public boolean favoriteExist(String username,int offset) {
+		User user=userRepository.findById(username).get();
+		Set<Item> itemList=user.getItems();
+		Item item=favoriteRepository.findById(offset).get();
+		boolean favExist=itemList.contains(item);
+		return favExist;
+	}
 	public Item addFavorite(String username,Item item) throws UserNotFoundException {
 		Optional<User> user = userRepository.findByUsername(username);
 		if (!user.isPresent()) {

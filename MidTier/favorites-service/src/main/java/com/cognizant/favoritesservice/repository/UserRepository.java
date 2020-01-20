@@ -12,5 +12,4 @@ import com.cognizant.favoritesservice.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String>{
 	public Optional<User> findByUsername(String username);
-
 }

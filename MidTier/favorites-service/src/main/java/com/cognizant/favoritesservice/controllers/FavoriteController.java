@@ -26,6 +26,10 @@ public class FavoriteController {
 	public Set<Item> getFavoritesByUsername(@PathVariable("username") String username){
 		return favoriteService.getFavoritesByUsername(username);
 	}
+	@GetMapping("/{username}/{offset}")
+	public boolean favoriteExist(@PathVariable("username") String username,@PathVariable("offset") int offset) {
+		return this.favoriteService.favoriteExist(username, offset);
+	}
 	@PostMapping("/{username}")
 	public Item addFavorite(@PathVariable("username") String username,@RequestBody Item item) throws UserNotFoundException {
 		try {

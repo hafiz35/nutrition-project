@@ -13,6 +13,7 @@ export class FoodService {
   foods:Food[];
   token:string;
   foodToView:Food;
+  addToFavorite:boolean=true;
   constructor(private httpClient:HttpClient,private authService:AuthService) { }
   
   getfoods(query:string):Observable<any>{
@@ -30,17 +31,22 @@ export class FoodService {
   }
   addFavorite(food:Food,username:string):Observable<any>{
     this.token=this.authService.getToken();
-    console.log(this.token);
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+this.token);
     return this.httpClient.post(`${this.baseUrl}/${username}`,food,{headers});
   }
   getFavoritesBasedOnUsername(username:string){
     this.token=this.authService.getToken();
-    console.log(this.token);
     let headers=new HttpHeaders();
     headers=headers.set('Authorization','Bearer '+this.token);
     return this.httpClient.get<Food[]>(`${this.baseUrl}/${username}`,{headers});
+  }
+
+  getFavoriteExistBasedOnUsername(username:string,food:Food){
+    this.token=this.authService.getToken();
+    let headers=new HttpHeaders();
+    headers=headers.set('Authorization','Bearer '+this.token);
+    return this.httpClient.get<boolean>(`${this.baseUrl}/${username}/${food.offset}`,{headers});
   }
 
   getnutrients(ndbno:number):Observable<any>{

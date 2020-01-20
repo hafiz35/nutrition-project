@@ -12,10 +12,12 @@ export class DisplayNutrientsComponent implements OnInit {
 
   nutrients:any;
   foodSelected:Food;
+  addToFavorite:boolean=false;
   constructor(private foodService:FoodService,private authenticationService:AuthService) { }
 
   ngOnInit() {
     this.foodSelected=this.foodService.foodToView;
+    this.addToFavorite=this.foodService.addToFavorite;
     this.foodService.getnutrients(this.foodSelected.ndbno).subscribe(data=>{      
       this.nutrients=data['foods']['0']['food']['nutrients'];
     })
