@@ -95,10 +95,7 @@ describe('SignUpComponent', () => {
     expect(mobile.valid).toBeTruthy();
   });
 
-
-
-
- xit('get username validity', () => {
+ it('get username validity', () => {
     let username = component.signupForm.controls['username'];
     username.setValue('abc');
     expect(component.username.value).toBe('abc');

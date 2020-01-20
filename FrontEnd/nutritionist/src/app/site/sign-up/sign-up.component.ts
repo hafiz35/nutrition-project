@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
-import { dashboardUrl } from '../user-navigation-handler';
 
 @Component({
   selector: 'app-sign-up',

@@ -40,10 +40,4 @@ public class FavoriteService {
 			return item;
 		}
 	}
-	public void removeFavorite(Item item) {
-		favoriteRepository.delete(item);
-	}
-	public Item modifyFavorite(Item item) {
-		return favoriteRepository.save(item);
-	}
 }
